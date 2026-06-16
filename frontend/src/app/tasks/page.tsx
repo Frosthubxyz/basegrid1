@@ -1,5 +1,5 @@
 import { Header } from "@/components/Header";
-import Link from "next/link";
+import { TaskCard } from "@/components/TaskCard";
 
 // Mock data for the placeholder UI
 const MOCK_TASKS = [
@@ -7,7 +7,7 @@ const MOCK_TASKS = [
     id: 1,
     title: "Label 100 images of handwritten text",
     reward: "0.05",
-    status: "Open",
+    status: "Open" as const,
     creator: "0x1234...5678",
     deadline: "2026-06-20",
   },
@@ -15,7 +15,7 @@ const MOCK_TASKS = [
     id: 2,
     title: "Verify sentiment analysis on 500 tweets",
     reward: "0.15",
-    status: "Open",
+    status: "Open" as const,
     creator: "0xABCD...EF01",
     deadline: "2026-06-18",
   },
@@ -23,7 +23,7 @@ const MOCK_TASKS = [
     id: 3,
     title: "Categorize support tickets into 5 buckets",
     reward: "0.02",
-    status: "In Progress",
+    status: "In Progress" as const,
     creator: "0x9876...5432",
     deadline: "2026-06-19",
   },
@@ -56,45 +56,7 @@ export default function TasksMarketplacePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {MOCK_TASKS.map((task) => (
-            <div 
-              key={task.id} 
-              className="group flex flex-col bg-zinc-900 border border-zinc-800 hover:border-zinc-700 rounded-2xl p-6 transition-all hover:shadow-[0_0_30px_rgba(59,130,246,0.1)] relative overflow-hidden"
-            >
-              {/* Status Badge */}
-              <div className="flex items-center justify-between mb-4">
-                <span className={`text-xs font-bold px-3 py-1 rounded-full ${task.status === 'Open' ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20' : 'bg-orange-500/10 text-orange-400 border border-orange-500/20'}`}>
-                  {task.status}
-                </span>
-                <span className="text-xs text-zinc-500 font-medium font-mono">
-                  {task.creator}
-                </span>
-              </div>
-
-              <h3 className="text-lg font-bold text-white mb-2 line-clamp-2">
-                {task.title}
-              </h3>
-
-              <div className="flex-1 mt-4 flex flex-col gap-3">
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-zinc-500">Reward</span>
-                  <div className="flex items-center gap-1.5 font-bold text-white">
-                    <div className="w-4 h-4 bg-blue-600 rounded-full flex items-center justify-center text-[10px]">ETH</div>
-                    {task.reward}
-                  </div>
-                </div>
-                <div className="flex items-center justify-between text-sm">
-                  <span className="text-zinc-500">Deadline</span>
-                  <span className="text-zinc-300 font-medium">{task.deadline}</span>
-                </div>
-              </div>
-
-              <Link 
-                href={`/tasks/${task.id}`}
-                className="mt-6 w-full py-3 bg-zinc-800 hover:bg-zinc-700 text-white text-sm font-bold text-center rounded-xl transition-colors"
-              >
-                View Details
-              </Link>
-            </div>
+            <TaskCard key={task.id} {...task} />
           ))}
         </div>
       </main>
