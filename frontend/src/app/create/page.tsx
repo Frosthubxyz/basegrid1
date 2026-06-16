@@ -4,6 +4,7 @@ import { Header } from "@/components/Header";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import toast from "react-hot-toast";
 
 const taskSchema = z.object({
   title: z.string().min(5, "Title must be at least 5 characters").max(100, "Title must be under 100 characters"),
@@ -21,6 +22,7 @@ export default function CreateTaskPage() {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isSubmitting },
   } = useForm<TaskFormValues>({
     resolver: zodResolver(taskSchema),
@@ -30,9 +32,17 @@ export default function CreateTaskPage() {
   });
 
   const onSubmit = async (data: TaskFormValues) => {
-    // Placeholder for Wagmi contract integration
-    console.log("Form validated and ready for contract:", data);
-    await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate tx delay
+    const loadingToast = toast.loading("Funding smart contract escrow...");
+    try {
+      // Placeholder for Wagmi contract integration
+      console.log("Form validated and ready for contract:", data);
+      await new Promise(resolve => setTimeout(resolve, 2000)); // Simulate tx delay
+      
+      toast.success("Task created successfully!", { id: loadingToast });
+      reset();
+    } catch (error) {
+      toast.error("Failed to create task. Please try again.", { id: loadingToast });
+    }
   };
 
   return (

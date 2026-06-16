@@ -3,15 +3,27 @@
 import { Header } from "@/components/Header";
 import Link from "next/link";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function TaskDetailsPage() {
   const [taskState, setTaskState] = useState<"open" | "accepted" | "submitted">("open");
   const [proof, setProof] = useState("");
 
-  const handleAccept = () => setTaskState("accepted");
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleAccept = async () => {
+    const loadingToast = toast.loading("Confirming transaction on Base...");
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    setTaskState("accepted");
+    toast.success("Task accepted! You can now start working.", { id: loadingToast });
+  };
+  
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (proof.trim()) setTaskState("submitted");
+    if (proof.trim()) {
+      const loadingToast = toast.loading("Submitting proof of work...");
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      setTaskState("submitted");
+      toast.success("Proof submitted successfully!", { id: loadingToast });
+    }
   };
 
   return (
