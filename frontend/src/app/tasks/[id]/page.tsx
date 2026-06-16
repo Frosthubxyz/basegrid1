@@ -116,14 +116,27 @@ export default function TaskDetailsPage() {
             )}
 
             {taskState === "submitted" && (
-              <div className="bg-green-500/10 border border-green-500/20 p-6 rounded-2xl flex flex-col items-center justify-center text-center gap-2">
-                <div className="w-12 h-12 bg-green-500/20 rounded-full flex items-center justify-center mb-2">
-                  <span className="text-green-500 text-xl">✓</span>
+              <div className="flex flex-col gap-6 bg-zinc-950 p-6 rounded-2xl border border-zinc-800">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-lg font-bold text-white">Review Submission</h3>
+                  <span className="text-xs font-bold text-yellow-500 bg-yellow-500/10 px-3 py-1 rounded-full border border-yellow-500/20">Pending Review</span>
                 </div>
-                <h3 className="text-lg font-bold text-green-400">Work Submitted</h3>
-                <p className="text-sm text-green-500/80">
-                  The task creator is reviewing your submission. You will receive the 0.05 ETH reward automatically once approved.
-                </p>
+                
+                <div className="bg-zinc-900 border border-zinc-800 p-4 rounded-xl">
+                  <span className="block text-sm text-zinc-500 mb-2">Worker&apos;s Proof of Work:</span>
+                  <a href="#" className="text-blue-400 hover:text-blue-300 break-all font-medium transition-colors">
+                    https://github.com/worker-repo/basegrid-ocr-labels/blob/main/results.json
+                  </a>
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-4 mt-2">
+                  <button className="flex-1 py-4 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl transition-colors shadow-[0_0_20px_rgba(34,197,94,0.3)]">
+                    Approve & Release 0.05 ETH
+                  </button>
+                  <button className="flex-1 py-4 bg-zinc-800 hover:bg-red-500/20 hover:text-red-400 text-zinc-300 font-bold rounded-xl transition-colors">
+                    Reject Submission
+                  </button>
+                </div>
               </div>
             )}
           </div>
