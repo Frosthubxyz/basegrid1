@@ -1,4 +1,8 @@
+"use client";
+
 import { Header } from "@/components/Header";
+import { useAccount } from "wagmi";
+import { useUserReputation } from "@/hooks";
 
 // Mock data for the leaderboard
 const TOP_WORKERS = [
@@ -10,15 +14,23 @@ const TOP_WORKERS = [
 ];
 
 export default function LeaderboardPage() {
+  const { address } = useAccount();
+  const { reputation } = useUserReputation(address);
+
   return (
     <>
       <Header />
       <main className="flex-1 max-w-4xl mx-auto w-full px-6 py-12">
         <div className="mb-10 text-center">
           <h1 className="text-4xl font-bold text-white mb-4">Reputation Leaderboard</h1>
-          <p className="text-zinc-400 max-w-2xl mx-auto">
+          <p className="text-zinc-400 max-w-2xl mx-auto mb-6">
             The top contributors on the BaseGrid network. High reputation unlocks premium tasks and better rewards.
           </p>
+          {address && (
+            <div className="inline-block bg-blue-500/10 border border-blue-500/30 rounded-xl p-4 text-blue-300">
+              Your Current Reputation: <span className="font-bold text-white text-xl ml-2">{reputation ? reputation.toString() : "0"}</span>
+            </div>
+          )}
         </div>
 
         <div className="bg-zinc-900 border border-zinc-800 rounded-2xl overflow-hidden">
